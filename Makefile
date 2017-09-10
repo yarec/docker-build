@@ -15,3 +15,6 @@ endef
 
 $(foreach prog,$(DIRS), $(eval $(call PROGRAM_template, $(strip $(prog)))))
 
+
+sync:
+	cp -r ../src/service/ai-\>/keras .
