@@ -1,3 +1,3 @@
 FROM gw000/keras
 
-pip install matplotlib
+RUN pip install matplotlib
