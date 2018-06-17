@@ -18,46 +18,36 @@ RUN apk update && \
     cp /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && \
     echo "${TIMEZONE}" > /etc/timezone && \
     apk add --update \
-        php-mcrypt \
-        php-soap \
-        php-openssl \
-        php-gmp \
-        php-pdo_odbc \
-        php-json \
-        php-dom \
-        php-pdo \
-        php-zip \
-        php-mysql \
-        php-sqlite3 \
-        php-apcu \
-        php-pdo_pgsql \
-        php-bcmath \
-        php-gd \
-        php-xcache \
-        php-odbc \
-        php-pdo_mysql \
-        php-pdo_sqlite \
-        php-gettext \
-        php-xmlreader \
-        php-xmlrpc \
-        php-bz2 \
-        php-memcache \
-        php-mssql \
-        php-iconv \
-        php-pdo_dblib \
-        php-curl \
-        php-ctype \
-        php-fpm \
-        php-phar \
-        php-cli && \
-    sed -i -e "s/;daemonize\s*=\s*yes/daemonize = no/g" /etc/php/php-fpm.conf && \
-    sed -i -e "s/listen\s*=\s*127.0.0.1:9000/listen = 9000/g" /etc/php/php-fpm.conf && \
-    sed -i "s|;date.timezone =.*|date.timezone = ${TIMEZONE}|" /etc/php/php.ini && \
-    sed -i "s|memory_limit =.*|memory_limit = ${PHP_MEMORY_LIMIT}|" /etc/php/php.ini && \
-    sed -i "s|upload_max_filesize =.*|upload_max_filesize = ${MAX_UPLOAD}|" /etc/php/php.ini && \
-    sed -i "s|max_file_uploads =.*|max_file_uploads = ${PHP_MAX_FILE_UPLOAD}|" /etc/php/php.ini && \
-    sed -i "s|post_max_size =.*|max_file_uploads = ${PHP_MAX_POST}|" /etc/php/php.ini && \
-    sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php/php.ini && \
+        php5-mcrypt \
+        php5-soap \
+        php5-openssl \
+        php5-gmp \
+        php5-pdo_odbc \
+        php5-json \
+        php5-dom \
+        php5-pdo \
+        php5-zip \
+        php5-mysql \
+        php5-sqlite3 \
+        php5-apcu \
+        php5-pdo_pgsql \
+        php5-bcmath \
+        php5-gd \
+        php5-odbc \
+        php5-pdo_mysql \
+        php5-pdo_sqlite \
+        php5-gettext \
+        php5-xmlreader \
+        php5-xmlrpc \
+        php5-bz2 \
+        php5-mssql \
+        php5-iconv \
+        php5-pdo_dblib \
+        php5-curl \
+        php5-ctype \
+        php5-fpm \
+        php5-phar \
+        php5-cli && \
     mkdir /www && \
     apk del tzdata && \
     rm -rf /var/cache/apk/*
