@@ -4,7 +4,7 @@
 # PLEASE DO NOT EDIT IT DIRECTLY.
 #
 
-FROM thinkwhere/gdal-python
+FROM geographica/gdal2
 
 # prevent Debian's PHP packages from being installed
 # https://github.com/docker-library/php/pull/542
@@ -89,10 +89,6 @@ RUN set -xe; \
 	if [ -n "$PHP_ASC_URL" ]; then \
 		wget -O php.tar.xz.asc "$PHP_ASC_URL"; \
 		export GNUPGHOME="$(mktemp -d)"; \
-		for key in $GPG_KEYS; do \
-			gpg --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
-		done; \
-		gpg --batch --verify php.tar.xz.asc php.tar.xz; \
 		rm -rf "$GNUPGHOME"; \
 	fi; \
 	\
@@ -105,7 +101,6 @@ RUN set -eux; \
 	savedAptMark="$(apt-mark showmanual)"; \
 	apt-get update; \
 	apt-get install -y --no-install-recommends \
-		libargon2-0-dev \
 		libcurl4-openssl-dev \
 		libedit-dev \
 		libsodium-dev \
@@ -148,7 +143,7 @@ RUN set -eux; \
 # --enable-mysqlnd is included here because it's harder to compile after the fact than extensions are (since it's a plugin for several extensions, not an extension in itself)
 		--enable-mysqlnd \
 # https://wiki.php.net/rfc/argon2_password_hash (7.2+)
-		--with-password-argon2 \
+		#--with-password-argon2 \
 # https://wiki.php.net/rfc/libsodium
 		--with-sodium=shared \
 		\
@@ -241,8 +236,16 @@ CMD ["php-fpm"]
 
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
-        libjpeg62-turbo-dev \
         libmcrypt-dev \
     && docker-php-ext-install -j$(nproc) iconv mbstring pdo_mysql \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
+
+RUN apt-get install -y \
+        python3-pip \
+        python3-scipy \
+        python3-pil
+
+RUN apt-get install -y  git
+RUN apt-get install -y  unzip
+RUN apt-get install -y  python3-h5py
